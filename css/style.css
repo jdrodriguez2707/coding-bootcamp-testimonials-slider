@@ -127,6 +127,10 @@ body {
     position: absolute;
   }
 
+  .slider-options-container {
+    left: 112px;
+  }
+
   .testimonial-container {
     align-items: flex-start;
     margin-right: 400px;
