@@ -21,12 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
     },
   ];
 
+  let changeSliderInterval;
+
   function changeTestimonial(event) {
     // Check if the event is a click on the next or prev button
-    const isNext = event.target.id === "next" || event.key === "ArrowRight";
-    const isPrev = event.target.id === "prev" || event.key === "ArrowLeft";
+    const isNext = event?.target.id === "next" || event?.key === "ArrowRight";
+    const isPrev = event?.target.id === "prev" || event?.key === "ArrowLeft";
 
-    if (isNext || isPrev) {
+    if (isNext || isPrev || event === undefined) {
       // Hide the current testimonial and show the next or previous one on the slider
       testimonials[currentIndex].profileImage.classList.add("inactive");
       testimonials[currentIndex].testimonial.classList.add("inactive");
@@ -34,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
       testimonials[currentIndex].role.classList.add("inactive");
 
       // Calculate the index of the next or previous testimonial
-      if (isNext) {
+      if (isNext || event === undefined) {
         currentIndex = (currentIndex + 1) % testimonials.length;
       } else if (isPrev) {
         currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
@@ -52,7 +54,17 @@ document.addEventListener("DOMContentLoaded", () => {
       testimonials[currentIndex].name.classList.add("fade-in");
       testimonials[currentIndex].role.classList.add("fade-in");
     }
+
+    resetInterval();
   }
+
+  function resetInterval() {
+    clearInterval(changeSliderInterval);
+    changeSliderInterval = setInterval(changeTestimonial, 12000);
+  }
+
+  // Configure the interval to change the testimonial automatically
+  resetInterval();
 });
 
 
