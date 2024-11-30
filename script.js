@@ -4,56 +4,55 @@ document.addEventListener("DOMContentLoaded", () => {
   const slider = document.querySelector("#slider");
   slider.addEventListener("click", changeTestimonial);
   document.addEventListener("keydown", changeTestimonial);
+
+  let currentIndex = 0;
+  const testimonials = [
+    {
+      profileImage: document.querySelector("#tanya-profile-image"),
+      testimonial: document.querySelector("#tanya-testimonial"),
+      name: document.querySelector("#tanya-name"),
+      role: document.querySelector("#tanya-role"),
+    },
+    {
+      profileImage: document.querySelector("#john-profile-image"),
+      testimonial: document.querySelector("#john-testimonial"),
+      name: document.querySelector("#john-name"),
+      role: document.querySelector("#john-role"),
+    },
+  ];
+
+  function changeTestimonial(event) {
+    // Check if the event is a click on the next or prev button
+    const isNext = event.target.id === "next" || event.key === "ArrowRight";
+    const isPrev = event.target.id === "prev" || event.key === "ArrowLeft";
+
+    if (isNext || isPrev) {
+      // Hide the current testimonial and show the next or previous one on the slider
+      testimonials[currentIndex].profileImage.classList.add("inactive");
+      testimonials[currentIndex].testimonial.classList.add("inactive");
+      testimonials[currentIndex].name.classList.add("inactive");
+      testimonials[currentIndex].role.classList.add("inactive");
+
+      // Calculate the index of the next or previous testimonial
+      if (isNext) {
+        currentIndex = (currentIndex + 1) % testimonials.length;
+      } else if (isPrev) {
+        currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+      }
+
+      // Show the next or previous testimonial on the slider
+      testimonials[currentIndex].profileImage.classList.remove("inactive");
+      testimonials[currentIndex].testimonial.classList.remove("inactive");
+      testimonials[currentIndex].name.classList.remove("inactive");
+      testimonials[currentIndex].role.classList.remove("inactive");
+
+      // Add fade-in class to animate the testimonial just after it's shown
+      testimonials[currentIndex].profileImage.classList.add("fade-in");
+      testimonials[currentIndex].testimonial.classList.add("fade-in");
+      testimonials[currentIndex].name.classList.add("fade-in");
+      testimonials[currentIndex].role.classList.add("fade-in");
+    }
+  }
 });
 
-function changeTestimonial(event) {
-  const tanyaProfileImage = document.querySelector("#tanya-profile-image");
-  const tanyaTestimonial = document.querySelector("#tanya-testimonial");
-  const tanyaName = document.querySelector("#tanya-name");
-  const tanyaRole = document.querySelector("#tanya-role");
 
-  const johnProfileImage = document.querySelector("#john-profile-image");
-  const johnTestimonial = document.querySelector("#john-testimonial");
-  const johnName = document.querySelector("#john-name");
-  const johnRole = document.querySelector("#john-role");
-
-  if (
-    (event.target.id === "next" || event.key === "ArrowRight") &&
-    !tanyaProfileImage.classList.contains("inactive")
-  ) {
-    tanyaProfileImage.classList.add("inactive");
-    johnProfileImage.classList.remove("inactive");
-    johnProfileImage.classList.add("fade-in");
-
-    tanyaTestimonial.classList.add("inactive");
-    johnTestimonial.classList.remove("inactive");
-    johnTestimonial.classList.add("fade-in");
-
-    tanyaName.classList.add("inactive");
-    johnName.classList.remove("inactive");
-    johnName.classList.add("fade-in");
-
-    tanyaRole.classList.add("inactive");
-    johnRole.classList.remove("inactive");
-    johnRole.classList.add("fade-in");
-  } else if (
-    (event.target.id === "prev" || event.key === "ArrowLeft") &&
-    !johnProfileImage.classList.contains("inactive")
-  ) {
-    johnProfileImage.classList.add("inactive");
-    tanyaProfileImage.classList.remove("inactive");
-    tanyaProfileImage.classList.add("fade-in");
-
-    johnTestimonial.classList.add("inactive");
-    tanyaTestimonial.classList.remove("inactive");
-    tanyaTestimonial.classList.add("fade-in");
-
-    johnName.classList.add("inactive");
-    tanyaName.classList.remove("inactive");
-    tanyaName.classList.add("fade-in");
-
-    johnRole.classList.add("inactive");
-    tanyaRole.classList.remove("inactive");
-    tanyaRole.classList.add("fade-in");
-  }
-}
